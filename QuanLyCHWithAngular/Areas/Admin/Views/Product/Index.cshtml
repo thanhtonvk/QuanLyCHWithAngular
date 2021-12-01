@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "title";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="~/AngularApp/Product/app.js"></script>
+<div ng-app="Product">
+    @Html.Hidden("ID_")
+    <div ng-controller="ProductController" ng-init="GetAllData('')">
+        <div class="row">
+            <input class="col-md-4" id="txtSearch" placeholder="Nhập từ khóa cần tìm"/>
+            <input type="submit" value="Tìm kiếm" class="btn btn-success col-md-1" ng-click="GetAllData(document.getElementById('txtSearch').value.toString())"/>
+        </div>
+        <br/>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Thêm
+        </button>
+        <table cellpadding="12" class="table-bordered table-hover table">
+            <tr>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Chi tiết sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá bán</th>
+                 <th>ID danh mục</th>
+                <th>Tùy chọn</th>
+            </tr>
+            <tr ng-repeat="item in ProductList">
+                <td>{{item.ID}}</td>
+                <td>{{item.Name}}</td>
+                <td>{{item.Details}}</td>
+                <td>
+                    <img src="{{item.Image}}" height="100"/>
+                </td>
+                <td>{{item.Cost}}</td>
+                <td>{{item.IDCategory}}</td>
+                <td>
+                    <input type="button" class="btn btn-warning" value="Update" ng-click="UpdateData(item)" data-toggle="modal" data-target="#exampleModal"/>
+                    <input type="button" class="btn btn-danger" value="Delete" ng-click="DeleteData(item)"/>
+                </td>
+            </tr>
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-horizontal" role="form">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label">Tên loại:</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" ng-model="Name_"/>
+                                                <input type="text" class="form-control" placeholder="Nhập thông tin sản phẩm" ng-model="Details_"/>
+                                                <input type="text" class="form-control" placeholder="Hình ảnh" ng-model="Image_"/>
+                                                <input type="number" class="form-control" placeholder="Giá" ng-model="Cost_"/>
+                                                <input type="text" class="form-control" placeholder="Danh mục" ng-model="IDCategory_"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="button" id="btnSave" class="btn btn-primary" value="Submit" ng-click="InsertData()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
